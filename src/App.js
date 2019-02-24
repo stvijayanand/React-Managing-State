@@ -11,10 +11,15 @@ class App extends Component {
     numCorrect: 0
   }
 
-  updateScore = (numQuestions, numCorrect) => {
+  updateScore = (isAnswerCorrect) => {
+    if (isAnswerCorrect) {
+      this.setState((prevState) => ({
+        numCorrect: prevState.numCorrect + 1
+      })
+      );
+    }
     this.setState((prevState) => ({
-      numQuestions: numQuestions,
-      numCorrect: numCorrect
+      numQuestions: prevState.numQuestions + 1
       })
     );
   }
@@ -29,9 +34,7 @@ class App extends Component {
         <div className="game">
           <h2>Mental Math</h2>
           <Game 
-            updateScore={this.updateScore}
-            numCorrect={this.state.numCorrect}
-            numQuestions={this.state.numQuestions}>></Game>
+            updateScore={this.updateScore}></Game>
           <Score
             numCorrect={this.state.numCorrect}
             numQuestions={this.state.numQuestions}></Score>

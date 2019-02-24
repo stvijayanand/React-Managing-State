@@ -39,19 +39,17 @@ class Game extends Component {
 
   //True eventhandler
   onTrueResponse = () => {
-    const countCorrect = (this.state.proposedAnswer === (this.state.value1 + this.state.value2 + this.state.value3) 
-                            ? this.props.numCorrect + 1 : this.props.numCorrect);
-    this.props.updateScore(this.props.numQuestions +1
-                                , countCorrect);  
+    const isAnswerCorrect = (this.state.proposedAnswer 
+                                === (this.state.value1 + this.state.value2 + this.state.value3))
+    this.props.updateScore(isAnswerCorrect);  
     this.reset();
   }
 
   //False eventhandler
   onFalseResponse = () => {
-    const countCorrect = (this.state.proposedAnswer === (this.state.value1 + this.state.value2 + this.state.value3) 
-        ? this.props.numCorrect : this.props.numCorrect + 1);
-    this.props.updateScore(this.props.numQuestions +1
-            , countCorrect);
+      const isAnswerCorrect = (this.state.proposedAnswer
+                                !== (this.state.value1 + this.state.value2 + this.state.value3))
+      this.props.updateScore(isAnswerCorrect);
 
     this.reset();
   }
