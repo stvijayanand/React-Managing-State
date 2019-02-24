@@ -37,32 +37,31 @@ class Game extends Component {
       }));
   }
 
-  //True eventhandler
-  onTrueResponse = () => {
-    const isAnswerCorrect = (this.state.proposedAnswer 
-                                === (this.state.value1 + this.state.value2 + this.state.value3))
-    this.props.updateScore(isAnswerCorrect);  
+  handleAnswer = (event) => {
+    const isAnswerCorrect = this.evaluateAnswer(event.target.id);                            
+    this.props.updateScore(isAnswerCorrect); 
+
     this.reset();
   }
 
-  //False eventhandler
-  onFalseResponse = () => {
-      const isAnswerCorrect = (this.state.proposedAnswer
-                                !== (this.state.value1 + this.state.value2 + this.state.value3))
-      this.props.updateScore(isAnswerCorrect);
+  evaluateAnswer = (selectedButton) => {
+      const {value1, value2, value3, proposedAnswer} = this.state;
 
-    this.reset();
+      return (proposedAnswer === (value1 + value2 + value3) && selectedButton === "trueButton")
+      || (proposedAnswer !== (value1 + value2 + value3) && selectedButton === "falseButton");
   }
 
 
     render(){
+        const {value1, value2, value3, proposedAnswer} = this.state;
+
         return (<div className="question">
             <div className="equation">
-                <p className="text">{`${this.state.value1} + ${this.state.value2} + ${this.state.value3} 
-        = ${this.state.proposedAnswer}`}</p>
+                <p className="text">{`${value1} + ${value2} + ${value3} 
+        = ${proposedAnswer}`}</p>
             </div>
-            <button onClick={this.onTrueResponse}>True</button>
-            <button onClick={this.onFalseResponse}>False</button>
+            <button id="trueButton" onClick={this.handleAnswer}>True</button>
+            <button id="falseButton" onClick={this.handleAnswer}>False</button>
         </div>);
     }
 }
